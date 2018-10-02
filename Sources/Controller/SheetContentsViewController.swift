@@ -2,7 +2,7 @@
 //  SheetContentsViewController.swift
 //  Sheeeeeeeeet
 //
-//  Created by NAVER on 2018. 9. 29..
+//  Created by Gwangbeom on 2018. 9. 29..
 //  Copyright © 2018년 GwangBeom. All rights reserved.
 //
 
@@ -27,7 +27,8 @@ open class SheetContentsViewController: UICollectionViewController {
     }()
 
     public var layout: SheetContentsLayout = SheetContentsLayout()
-    
+
+    /// Sheet visible contents height. If contentSize height is less than visibleContentsHeight, contentSize height is applied.
     open var visibleContentsHeight: CGFloat {
         return SheetManager.shared.options.defaultVisibleContentHeight
     }
@@ -39,12 +40,12 @@ open class SheetContentsViewController: UICollectionViewController {
         setupViews()
     }
 
-    /// Exists to regist the Elements of CollectionView
+    /// Give CollectionView a chance to regulate Supplementray Element
     open func registCollectionElement() {
 
     }
     
-    /// Layout settings
+    /// Provide an opportunity to set default settings for collectionview custom layout
     open func setupSheetLayout() {
         
     }

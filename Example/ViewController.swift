@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  Sheeeeeeeeet
 //
-//  Created by NAVER on 2018. 9. 26..
+//  Created by Gwangbeom on 2018. 9. 26..
 //  Copyright © 2018년 GwangBeom. All rights reserved.
 //
 
@@ -32,12 +32,19 @@ extension ViewController: UICollectionViewDataSource {
         let green = CGFloat(arc4random() % 255) / 255
         let blue = CGFloat(arc4random() % 255) / 255
         cell?.itemImageView.backgroundColor = UIColor(red: red, green: green, blue: blue, alpha: 1)
-        cell?.titleLabel.text = "Item - \(indexPath.item + 1)"
         return cell ?? UICollectionViewCell()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        return collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: "main", for: indexPath)
     }
 }
 
 extension ViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 340)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (collectionView.bounds.width - 30) / 2

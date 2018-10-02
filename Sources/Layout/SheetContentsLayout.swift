@@ -2,7 +2,7 @@
 //  SheetContentsLayout.swift
 //  VibeMusic
 //
-//  Created by Naver on 2018. 6. 29..
+//  Created by Gwangbeom on 2018. 6. 29..
 //  Copyright © 2018년 VIBE. All rights reserved.
 //
 
@@ -177,7 +177,7 @@ extension SheetContentsLayout {
             let decorator = SheetLayoutAttributes(forDecorationViewOfKind: SheetDecorationView.KIND, with: indexPath)
             var rect = CGRect.zero
             rect.origin = CGPoint(x: 0, y: settings.topMargin)
-            rect.size = collectionViewContentSize
+            rect.size = CGSize(width: collectionViewContentSize.width, height: collectionViewContentSize.height * 4) 
             decorator.frame = rect
             decorator.zIndex = -1
             visibleLayoutAttributes.append(decorator)

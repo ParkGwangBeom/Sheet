@@ -2,7 +2,7 @@
 //  DescriptionFooterView.swift
 //  Sheeeeeeeeet
 //
-//  Created by NAVER on 2018. 10. 1..
+//  Created by Gwangbeom on 2018. 10. 1..
 //  Copyright © 2018년 GwangBeom. All rights reserved.
 //
 

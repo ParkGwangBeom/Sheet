@@ -2,7 +2,7 @@
 //  SheetOptions.swift
 //  Sheeeeeeeeet
 //
-//  Created by NAVER on 2018. 9. 28..
+//  Created by Gwangbeom on 2018. 9. 28..
 //  Copyright © 2018년 GwangBeom. All rights reserved.
 //
 

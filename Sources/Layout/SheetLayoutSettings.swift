@@ -2,16 +2,15 @@
 //  SheetLayoutSettings.swift
 //  Sheeeeeeeeet
 //
-//  Created by NAVER on 2018. 10. 1..
+//  Created by Gwangbeom on 2018. 10. 1..
 //  Copyright © 2018년 GwangBeom. All rights reserved.
 //
 
 import UIKit
 
 public struct SheetLayoutSettings {
-    
-    ///
-    public var topMargin: CGFloat = 0
+
+    var topMargin: CGFloat = 0
     
     /// Whether the header view is stiky. Defaults to true
     public var isHeaderStretchy = true

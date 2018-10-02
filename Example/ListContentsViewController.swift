@@ -2,7 +2,7 @@
 //  ListContentsViewController.swift
 //  Sheeeeeeeeet
 //
-//  Created by NAVER on 2018. 9. 29..
+//  Created by Gwangbeom on 2018. 9. 29..
 //  Copyright © 2018년 GwangBeom. All rights reserved.
 //
 
@@ -17,13 +17,13 @@ struct ListItem {
 class ListContentsViewController: SheetContentsViewController {
     
     var items: [ListItem] = [
-        ListItem(image: nil, title: "Like"),
-        ListItem(image: nil, title: "Add to mylist"),
-        ListItem(image: nil, title: "Send to Firends"),
-        ListItem(image: nil, title: "Report"),
-        ListItem(image: nil, title: "Move"),
-        ListItem(image: nil, title: "Login"),
-        ListItem(image: nil, title: "Loading")
+        ListItem(image: #imageLiteral(resourceName: "like"), title: "Like"),
+        ListItem(image: #imageLiteral(resourceName: "add"), title: "Add to mylist"),
+        ListItem(image: #imageLiteral(resourceName: "send"), title: "Send to Firends"),
+        ListItem(image: #imageLiteral(resourceName: "report"), title: "Report"),
+        ListItem(image: #imageLiteral(resourceName: "move"), title: "Move"),
+        ListItem(image: #imageLiteral(resourceName: "login"), title: "Login"),
+        ListItem(image: #imageLiteral(resourceName: "loading"), title: "Loading")
     ]
     
     override var visibleContentsHeight: CGFloat {

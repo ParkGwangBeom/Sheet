@@ -2,7 +2,7 @@
 //  SendViewController.swift
 //  Sheeeeeeeeet
 //
-//  Created by NAVER on 2018. 9. 29..
+//  Created by Gwangbeom on 2018. 9. 29..
 //  Copyright © 2018년 GwangBeom. All rights reserved.
 //
 
@@ -132,7 +132,6 @@ extension FristsListContainerCell: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as? FriendCell
         let friend = frinesLsit[indexPath.item]
-        cell?.userImageView.image = friend.image
         cell?.nameLabel.text = friend.name
         return cell ?? UICollectionViewCell()
     }

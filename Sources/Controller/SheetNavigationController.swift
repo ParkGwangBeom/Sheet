@@ -2,7 +2,7 @@
 //  SheetNavigationController.swift
 //  Sheeeeeeeeet
 //
-//  Created by NAVER on 2018. 9. 27..
+//  Created by Gwangbeom on 2018. 9. 27..
 //  Copyright © 2018년 GwangBeom. All rights reserved.
 //
 
@@ -72,11 +72,7 @@ public class SheetNavigationController: UINavigationController {
         }
         super.pushViewController(viewController, animated: animated)
     }
-    
-    public override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        fatalError("Use close(duration:completion:)")
-    }
-    
+
     public func close(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
         let contentsViewController = viewControllers.last as? SheetContentsViewController
         contentsViewController?.view.isHidden = true
