@@ -27,7 +27,7 @@
 <br/>
 
 <p align="center">
-💦 Navigable custom action sheet like Flipboard
+💦 SHEET helps you easily create a wide variety of action sheets with navigation features used in the Flipboard App
 </p>
 
 <br/>
