@@ -55,6 +55,7 @@ If you prefer not to use either of the aforementioned dependency managers, you c
 ## Usage
 
 Implementing the contents of a Sheet is similar to implementing an existing UICollectionViewController.
+Simply make your view controller subclass of SheetContentsViewController.
 
 ```
 import Sheet
@@ -130,6 +131,7 @@ navigationController?.popViewController(animated: true)
 
 
 ## Advanced
+Easily customizable by SheetContents.
 
 ### Options
 
