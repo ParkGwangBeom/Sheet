@@ -23,32 +23,12 @@ class MylistViewController: SheetContentsViewController {
         MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
         MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
         MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
-        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
-        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
-        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
-        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
-        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
     ]
-    
-    override var visibleContentsHeight: CGFloat {
-        return UIScreen.main.bounds.height
+
+    override var isFullScreenContent: Bool {
+        return true
     }
-    
-//    override var isToolBarHidden: Bool {
-//        return true
-//    }
-    
+
     override func registCollectionElement() {
         let nib = UINib(nibName: "TitleHeaderView", bundle: nil)
         collectionView?.register(nib, forSupplementaryViewOfKind: SheetLayoutElement.header.kind, withReuseIdentifier: SheetLayoutElement.header.id)

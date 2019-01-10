@@ -36,6 +36,10 @@ open class SheetContentsViewController: UICollectionViewController {
         return closeButton
     }()
     
+    open var isFullScreenContent: Bool {
+        return false
+    }
+    
     /// Sheet ToolBar hide property. Defaults to false
     open var isToolBarHidden: Bool {
         return options.isToolBarHidden
@@ -147,7 +151,7 @@ private extension SheetContentsViewController {
         let contentHeight = collectionView?.contentSize.height ?? 0
         let visibleHeight = min(contentHeight - layout.settings.topMargin, visibleContentsHeight)
         
-        topMargin = max(screenHeight - visibleHeight - bottomToolBarHeight, 0)
+        topMargin = isFullScreenContent ? 0 : max(screenHeight - visibleHeight - bottomToolBarHeight, 0)
         layout.settings.topMargin = topMargin
     }
 
