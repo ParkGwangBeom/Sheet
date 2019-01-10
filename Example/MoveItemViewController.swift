@@ -43,7 +43,7 @@ class MoveItemViewController: SheetContentsViewController {
         collectionView?.register(nib, forSupplementaryViewOfKind: SheetLayoutElement.header.kind, withReuseIdentifier: SheetLayoutElement.header.id)
     }
     
-    override func setupSheetLayout() {
+    override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { indexPath in
             let width = (UIScreen.main.bounds.width - 30) / 2
             return CGSize(width: width, height: width)

@@ -27,7 +27,7 @@ class WriteViewController: SheetContentsViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    override func setupSheetLayout() {
+    override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { _ in
             return CGSize(width: UIScreen.main.bounds.width, height: 220)
         }
@@ -47,7 +47,7 @@ class WriteViewController: SheetContentsViewController {
     }
     
     @IBAction func tappedDoneButton(_ sender: Any) {
-        close()
+        dismiss(animated: true)
     }
 }
 
@@ -61,14 +61,11 @@ extension WriteViewController {
     @objc
     func willShowKeyboard(notification: Notification) {
         notification.keyboardAnimation({ [weak self] size in
-            self?.collectionView?.frame.origin.y -= size.height
+            self?.collectionView?.frame.origin.y = -size.height
             self?.sheetNavigationController?.toolBarBottomConstraint?.constant -= size.height
             self?.sheetNavigationController?.toolBarHeightConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight
             self?.sheetNavigationController?.view.layoutIfNeeded()
-        }) { [weak self] _, size in
-            let topMargin = self?.topMargin ?? 0
-            self?.topMargin = max(topMargin - size.height, 0)
-        }
+        }, completion: nil)
     }
     
     @objc
@@ -78,8 +75,7 @@ extension WriteViewController {
             self?.sheetNavigationController?.toolBarBottomConstraint?.constant += size.height
             self?.sheetNavigationController?.toolBarHeightConstraint?.constant = self?.collectionView?.contentInset.bottom ?? 0
             self?.sheetNavigationController?.view.layoutIfNeeded()
-        }) { _, _ in
-        }
+        }, completion: nil)
     }
 }
 
@@ -95,7 +91,7 @@ class WriteCell: UICollectionViewCell {
 
 extension Notification {
     
-    func keyboardAnimation(_ animations: @escaping (CGSize) -> Void, completion: @escaping (Bool, CGSize) -> Void) {
+    func keyboardAnimation(_ animations: @escaping (CGSize) -> Void, completion: ((Bool, CGSize) -> Void)?) {
         let duration = userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0
         let curve = userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? UInt ?? 0
         let keyboardRect = userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect ?? .zero
@@ -103,7 +99,7 @@ extension Notification {
         UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(rawValue: curve), animations: {
             animations(keyboardRect.size)
         }, completion: { flag in
-            completion(flag, keyboardRect.size)
+            completion?(flag, keyboardRect.size)
         })
     }
 }

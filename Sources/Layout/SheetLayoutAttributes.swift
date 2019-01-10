@@ -8,23 +8,25 @@
 
 import UIKit
 
-class SheetLayoutAttributes: UICollectionViewLayoutAttributes {
+public class SheetLayoutAttributes: UICollectionViewLayoutAttributes {
 
-    var initialOrigin: CGPoint = .zero
+    public var initialOrigin: CGPoint = .zero
+    public var contentOffset: CGPoint = .zero
     
-    override func copy(with zone: NSZone?) -> Any {
+    public override func copy(with zone: NSZone?) -> Any {
         guard let copiedAttributes = super.copy(with: zone) as? SheetLayoutAttributes else {
             return super.copy(with: zone)
         }
         copiedAttributes.initialOrigin = initialOrigin
+        copiedAttributes.contentOffset = contentOffset
         return copiedAttributes
     }
     
-    override func isEqual(_ object: Any?) -> Bool {
+    public override func isEqual(_ object: Any?) -> Bool {
         guard let otherAttributes = object as? SheetLayoutAttributes else {
             return false
         }
-        if otherAttributes.initialOrigin != initialOrigin {
+        if otherAttributes.initialOrigin != initialOrigin || otherAttributes.contentOffset != contentOffset {
             return false
         }
         

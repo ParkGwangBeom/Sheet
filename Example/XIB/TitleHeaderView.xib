@@ -1,22 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="TitleHeaderView" customModule="Sheeeeeeeeet" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="U6b-Vx-4bR" customClass="TitleHeaderView" customModule="Example" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MW3-Im-fnT">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SEND" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pik-K2-YfG">
-                    <rect key="frame" x="15" y="4" width="94" height="42"/>
+                    <rect key="frame" x="15" y="9" width="94" height="42"/>
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="35"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
@@ -24,11 +28,16 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
+                <constraint firstItem="MW3-Im-fnT" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" id="CVI-xH-i6G"/>
                 <constraint firstItem="pik-K2-YfG" firstAttribute="leading" secondItem="VXr-Tz-HHm" secondAttribute="leading" constant="15" id="Fe1-oC-aPR"/>
-                <constraint firstItem="pik-K2-YfG" firstAttribute="centerY" secondItem="U6b-Vx-4bR" secondAttribute="centerY" id="rZc-dq-gTJ"/>
+                <constraint firstItem="MW3-Im-fnT" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="HRq-OF-shQ"/>
+                <constraint firstAttribute="bottom" secondItem="MW3-Im-fnT" secondAttribute="bottom" id="IaI-GW-tct"/>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="bottom" secondItem="pik-K2-YfG" secondAttribute="bottom" constant="9" id="YSU-Or-JYR"/>
+                <constraint firstItem="VXr-Tz-HHm" firstAttribute="trailing" secondItem="MW3-Im-fnT" secondAttribute="trailing" id="aCA-2A-sfd"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="VXr-Tz-HHm"/>
             <connections>
+                <outlet property="backgroundView" destination="MW3-Im-fnT" id="dIW-Qe-aN3"/>
                 <outlet property="titleLabel" destination="pik-K2-YfG" id="MJz-rd-hdH"/>
             </connections>
         </collectionReusableView>

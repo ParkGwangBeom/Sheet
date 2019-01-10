@@ -21,7 +21,7 @@ public class SheetNavigationController: UINavigationController {
     public var toolBarBottomConstraint: NSLayoutConstraint?
     
     private var backgroundView: UIView?
-    private var sheetToolBarContainerView: UIView?
+    var sheetToolBarContainerView: UIView?
     private var topMargins: [CGFloat] = []
     
     public override init(rootViewController: UIViewController) {
@@ -48,11 +48,13 @@ public class SheetNavigationController: UINavigationController {
         super.viewWillAppear(animated)
 
         let rootViewController = viewControllers.first as? SheetContentsViewController
-        let visibleHeight = min(rootViewController?.collectionView?.contentSize.height ?? 0, rootViewController?.visibleContentsHeight ?? 0)
+        let contentSize = rootViewController?.collectionView?.contentSize ?? .zero
+        let visibleContentsHeight = rootViewController?.visibleContentsHeight ?? 0
+        let visibleHeight = min(contentSize.height, visibleContentsHeight)
         rootViewController?.collectionView?.transform = CGAffineTransform(translationX: 0, y: visibleHeight + options.sheetToolBarHeight)
         sheetToolBarContainerView?.transform = CGAffineTransform(translationX: 0, y: SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom)
         
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+        UIView.animate(withDuration: 0.45, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
             rootViewController?.collectionView?.transform = .identity
         }, completion: nil)
         
@@ -72,8 +74,16 @@ public class SheetNavigationController: UINavigationController {
         }
         super.pushViewController(viewController, animated: animated)
     }
+    
+    public override func popViewController(animated: Bool) -> UIViewController? {
+        if let contentsViewController = currentContentsViewController {
+            let originY = contentsViewController.collectionView?.frame.origin.y ?? 0
+            contentsViewController.topMargin = max(contentsViewController.topMargin + originY, 0)
+        }
+        return super.popViewController(animated: animated)
+    }
 
-    public func close(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
+    func close(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
         let contentsViewController = viewControllers.last as? SheetContentsViewController
         contentsViewController?.view.isHidden = true
         
@@ -82,13 +92,18 @@ public class SheetNavigationController: UINavigationController {
         snapShot.frame = view.bounds
         
         view.insertSubview(snapShot, at: 2)
-        
-        UIView.animate(withDuration: duration, animations: {
-            let diff = UIScreen.main.bounds.height - topMargin
-            snapShot.transform = CGAffineTransform(translationX: 0, y: diff)
-            self.backgroundView?.alpha = 0
-            self.sheetToolBarContainerView?.transform = CGAffineTransform(translationX: 0, y: self.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom)
-            self.presentingViewController?.view.transform = .identity
+
+        UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeLinear], animations: {
+            UIView.addKeyframe(withRelativeStartTime: 0, relativeDuration: 1) {
+                let diff = UIScreen.main.bounds.height - topMargin
+                snapShot.transform = CGAffineTransform(translationX: 0, y: diff)
+                self.backgroundView?.alpha = 0
+                self.presentingViewController?.view.transform = .identity
+            }
+            
+            UIView.addKeyframe(withRelativeStartTime: 0.6, relativeDuration: 0.4) {
+                self.sheetToolBarContainerView?.transform = CGAffineTransform(translationX: 0, y: self.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom)
+            }
         }) { _ in
             snapShot.removeFromSuperview()
             self.dismiss(animated: false, completion: completion)
@@ -117,7 +132,6 @@ private extension SheetNavigationController {
         transitioningDelegate = self
         isNavigationBarHidden = true
         modalPresentationStyle = .overFullScreen
-        modalTransitionStyle = .crossDissolve
     }
     
     func setupBackgroundView() {
@@ -129,7 +143,7 @@ private extension SheetNavigationController {
     }
 
     func setupSheetToolBarContainerView() {
-        guard !options.isSheetToolBarHidden else {
+        guard !options.isToolBarHidden else {
             return
         }
         let containerView = UIView()
@@ -185,7 +199,16 @@ extension SheetNavigationController: UINavigationControllerDelegate {
     
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         let viewController = viewController as? SheetContentsViewController
-        updateSheetToolBar(toolBar: viewController?.sheetToolBar)
+        if viewController?.isToolBarHidden ?? false {
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+                self.toolBarBottomConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+                self.view.layoutIfNeeded()
+            }) { _ in
+                
+            }
+        } else {
+            updateSheetToolBar(toolBar: viewController?.sheetToolBar)
+        }
     }
 
     public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
@@ -202,7 +225,7 @@ extension SheetNavigationController: UINavigationControllerDelegate {
         } else {
             toTopMargin = topMargins.removeLast()
         }
-       
+
         let animator = SheetFadeAnimator(to: toTopMargin, from: fromTopMargin)
         animator.isPush = operation == .push
         animator.onReady = { }

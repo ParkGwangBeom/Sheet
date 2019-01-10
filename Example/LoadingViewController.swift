@@ -50,7 +50,7 @@ class LoadingViewController: SheetContentsViewController {
         collectionView?.register(nib, forSupplementaryViewOfKind: SheetLayoutElement.header.kind, withReuseIdentifier: SheetLayoutElement.header.id)
     }
     
-    override func setupSheetLayout() {
+    override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { [weak self] _ in
             let height: CGFloat = self?.loaingState == .loading ? 130 : 60
             return CGSize(width: UIScreen.main.bounds.width, height: height)

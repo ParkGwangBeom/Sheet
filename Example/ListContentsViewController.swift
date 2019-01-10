@@ -25,7 +25,7 @@ class ListContentsViewController: SheetContentsViewController {
         ListItem(image: #imageLiteral(resourceName: "login"), title: "Login"),
         ListItem(image: #imageLiteral(resourceName: "loading"), title: "Loading")
     ]
-    
+
     override var visibleContentsHeight: CGFloat {
         return 320
     }
@@ -37,7 +37,7 @@ class ListContentsViewController: SheetContentsViewController {
         // (sheetToolBar as? UIButton)?.setTitleColor(.green, for: .normal)
     }
     
-    override func setupSheetLayout() {
+    override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { _ in
             return CGSize(width: UIScreen.main.bounds.width, height: 55)
         }
@@ -77,7 +77,7 @@ class ListContentsViewController: SheetContentsViewController {
             navigationController?.pushViewController(vc, animated: true)
         } else {
             let item = items[indexPath.item]
-            close {
+            dismiss(animated: true) {
                 let alertView = UIAlertView(title: nil, message: "Tapped \(item.title)", delegate: nil, cancelButtonTitle: "Done")
                 alertView.show()
             }

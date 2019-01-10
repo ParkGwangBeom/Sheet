@@ -195,6 +195,7 @@ extension SheetContentsLayout {
                 y: min(upperLimit, max(0, contentOffset.y - attributes.initialOrigin.y)))
         } else if type == .header, settings.isHeaderStretchy {
             attributes.transform = CGAffineTransform(translationX: 0, y: max(0, contentOffset.y - attributes.initialOrigin.y))
+            attributes.contentOffset = contentOffset
         }
     }
 }

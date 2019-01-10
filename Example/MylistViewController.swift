@@ -20,21 +20,47 @@ class MylistViewController: SheetContentsViewController {
     var items: [MyListItem] = [
         MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
         MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
-        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false)
+        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
+        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
+        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
+        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
+        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
+        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Trevi", isPrivacy: true),
+        MyListItem(iamge: nil, title: "Moomin Love", isPrivacy: false),
+        MyListItem(iamge: nil, title: "Sheet", isPrivacy: false),
     ]
+    
+    override var visibleContentsHeight: CGFloat {
+        return UIScreen.main.bounds.height
+    }
+    
+//    override var isToolBarHidden: Bool {
+//        return true
+//    }
     
     override func registCollectionElement() {
         let nib = UINib(nibName: "TitleHeaderView", bundle: nil)
         collectionView?.register(nib, forSupplementaryViewOfKind: SheetLayoutElement.header.kind, withReuseIdentifier: SheetLayoutElement.header.id)
     }
 
-    override func setupSheetLayout() {
+    override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { indexPath in
             let height: CGFloat = indexPath.section == 0 ? 30 : 60
             return CGSize(width: UIScreen.main.bounds.width, height: height)
         }
         layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 15, right: 0)
-        layout.settings.headerSize = CGSize(width: UIScreen.main.bounds.width, height: 60)
+        layout.settings.headerSize = CGSize(width: UIScreen.main.bounds.width, height: 60 + 44)
         layout.settings.isHeaderStretchy = true
     }
 
