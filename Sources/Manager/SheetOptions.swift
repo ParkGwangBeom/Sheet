@@ -24,6 +24,8 @@ public enum SheetPresentTransitionType {
 
 public struct ToolBarItem {
     
+    public init() { }
+    
     /// Default Sheet ToolBar font
     public var font: UIFont = .systemFont(ofSize: 15)
     
