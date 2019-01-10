@@ -39,7 +39,7 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         let toContainer = toViewController?.collectionView
         
         let backgroundView = UIView()
-        backgroundView.backgroundColor = .white
+        backgroundView.backgroundColor = SheetManager.shared.options.sheetBackgroundColor
         
         backgroundView.layer.cornerRadius = options.cornerRadius
         backgroundView.frame = CGRect(x: 0, y: fromTopMargin, width: containerView.bounds.width, height: containerView.bounds.height)

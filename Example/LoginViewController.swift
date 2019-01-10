@@ -32,7 +32,7 @@ class LoginViewController: SheetContentsViewController {
         collectionView?.register(nib, forSupplementaryViewOfKind: SheetLayoutElement.footer.kind, withReuseIdentifier: SheetLayoutElement.footer.id)
     }
     
-    override func setupSheetLayout() {
+    override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { _ in
             return CGSize(width: UIScreen.main.bounds.width, height: 60)
         }
@@ -66,7 +66,7 @@ class LoginViewController: SheetContentsViewController {
     }
     
     @IBAction func tappedLogin(_ sender: Any) {
-        close()
+        dismiss(animated: true)
     }
 }
 

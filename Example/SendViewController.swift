@@ -40,7 +40,7 @@ class SendViewController: SheetContentsViewController, FristsListContainerCellDe
         collectionView?.register(nib, forSupplementaryViewOfKind: SheetLayoutElement.header.kind, withReuseIdentifier: SheetLayoutElement.header.id)
     }
     
-    override func setupSheetLayout() {
+    override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { indexPath in
             let height: CGFloat = indexPath.item == 0 ? 30 : 170
             return CGSize(width: UIScreen.main.bounds.width, height: height)
@@ -82,7 +82,7 @@ class SendViewController: SheetContentsViewController, FristsListContainerCellDe
     }
     
     @IBAction func tappedDone(_ sender: Any) {
-        close()
+        dismiss(animated: true)
     }
     
     func tappedFriend(isSelected: Bool) {

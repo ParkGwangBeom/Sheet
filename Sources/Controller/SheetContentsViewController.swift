@@ -13,20 +13,33 @@ open class SheetContentsViewController: UICollectionViewController {
     private var options: SheetOptions {
         return SheetManager.shared.options
     }
+
+    private var layout = SheetContentsLayout()
     
-    public var topMargin: CGFloat = 0
+    var topMargin: CGFloat = 0
     
     public lazy var sheetToolBar: UIView = {
         let closeButton = UIButton(type: .system)
-        let title = isRootViewController ? "Close" : "Back"
+        let title = isRootViewController ? options.defaultToolBarItem.defaultCloseTitle : options.defaultToolBarItem.defaultBackTitle
         closeButton.setTitle(title, for: .normal)
         closeButton.titleLabel?.font = options.defaultToolBarItem.font
         closeButton.setTitleColor(options.defaultToolBarItem.titleColor, for: .normal)
-        closeButton.addTarget(self, action: #selector(tappedClose), for: .touchUpInside)
+        closeButton.addTarget(self, action: #selector(tappedDefaultButton), for: .touchUpInside)
+        
+        if !options.defaultToolBarItem.isLineHidden {
+            let border = CALayer()
+            border.backgroundColor = options.defaultToolBarItem.lineColor.cgColor
+            border.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0.5)
+            closeButton.layer.addSublayer(border)
+        }
+        
         return closeButton
     }()
-
-    public var layout: SheetContentsLayout = SheetContentsLayout()
+    
+    ///
+    open var isToolBarHidden: Bool {
+        return options.isToolBarHidden
+    }
 
     /// Sheet visible contents height. If contentSize height is less than visibleContentsHeight, contentSize height is applied.
     open var visibleContentsHeight: CGFloat {
@@ -36,7 +49,7 @@ open class SheetContentsViewController: UICollectionViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         registCollectionElement()
-        setupSheetLayout()
+        setupSheetLayout(layout)
         setupViews()
     }
 
@@ -46,28 +59,10 @@ open class SheetContentsViewController: UICollectionViewController {
     }
     
     /// Provide an opportunity to set default settings for collectionview custom layout
-    open func setupSheetLayout() {
+    open func setupSheetLayout(_ layout: SheetContentsLayout) {
         
     }
 
-    @objc
-    public func close(completion: (() -> Void)? = nil) {
-        sheetNavigationController?.close(completion: completion)
-    }
-    
-    @objc
-    func tappedClose() {
-        if isRootViewController {
-            sheetNavigationController?.close()
-        } else {
-            navigationController?.popViewController(animated: true)
-        }
-    }
-    
-    open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
-        fatalError("Use close(duration:completion:)")
-    }
-    
     open override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         fatalError("Implement with override as required")
     }
@@ -77,9 +72,7 @@ open class SheetContentsViewController: UICollectionViewController {
     }
 
     open override func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if let layout = collectionView?.collectionViewLayout as? SheetContentsLayout {
-            topMargin = max(layout.settings.topMargin - scrollView.contentOffset.y, 0)
-        }
+        topMargin = max(layout.settings.topMargin - scrollView.contentOffset.y, 0)
     }
     
     open override func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -88,6 +81,14 @@ open class SheetContentsViewController: UICollectionViewController {
             let diff = UIScreen.main.bounds.height - topMargin
             let duration = diff / velocity.y
             sheetNavigationController?.close(duration: TimeInterval(duration))
+        }
+    }
+    
+    open override func dismiss(animated flag: Bool, completion: (() -> Void)? = nil) {
+        if sheetNavigationController == nil {
+            super.dismiss(animated: flag, completion: completion)
+        } else {
+            sheetNavigationController?.close(completion: completion)
         }
     }
 }
@@ -111,6 +112,7 @@ extension SheetContentsViewController {
     }
 }
 
+// MARK: Views
 private extension SheetContentsViewController {
 
     func setupViews() {
@@ -120,7 +122,7 @@ private extension SheetContentsViewController {
     }
     
     func setupContainerView() {
-        let bottomToolBarHeight: CGFloat = SheetManager.shared.options.isSheetToolBarHidden ? UIEdgeInsets.safeAreaInsets.bottom : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+        let bottomToolBarHeight: CGFloat = SheetManager.shared.options.isToolBarHidden ? UIEdgeInsets.safeAreaInsets.bottom : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
         
         collectionView?.delaysContentTouches = true
         collectionView?.collectionViewLayout.invalidateLayout()
@@ -138,28 +140,39 @@ private extension SheetContentsViewController {
     }
     
     func updateTopMargin() {
-        let bottomToolBarHeight: CGFloat = SheetManager.shared.options.isSheetToolBarHidden ? UIEdgeInsets.safeAreaInsets.bottom : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+        let bottomToolBarHeight: CGFloat = SheetManager.shared.options.isToolBarHidden ? UIEdgeInsets.safeAreaInsets.bottom : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
         collectionView?.layoutIfNeeded()
         
         let screenHeight = UIScreen.main.bounds.height
         let contentHeight = collectionView?.contentSize.height ?? 0
         let visibleHeight = min(contentHeight - layout.settings.topMargin, visibleContentsHeight)
         
-        var headerViewRect: CGRect = .zero
-        headerViewRect.size.height = screenHeight - visibleHeight - bottomToolBarHeight
-        layout.settings.topMargin = headerViewRect.size.height
-        topMargin = headerViewRect.size.height
+        topMargin = max(screenHeight - visibleHeight - bottomToolBarHeight, 0)
+        layout.settings.topMargin = topMargin
     }
 
     func setupDimmingView() {
         let dimmingButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: topMargin))
         dimmingButton.backgroundColor = .clear
-        dimmingButton.addTarget(self, action: #selector(tappedBackgroundView), for: .touchUpInside)
-        collectionView?.addSubview(dimmingButton)
+        dimmingButton.addTarget(self, action: #selector(tappedBackground), for: .touchUpInside)
+        collectionView?.insertSubview(dimmingButton, at: 0)
+    }
+}
+
+// MARK: Events
+private extension SheetContentsViewController {
+    
+    @objc
+    func tappedBackground() {
+        sheetNavigationController?.close()
     }
     
     @objc
-    func tappedBackgroundView() {
-        sheetNavigationController?.close()
+    func tappedDefaultButton() {
+        if isRootViewController {
+            sheetNavigationController?.close()
+        } else {
+            navigationController?.popViewController(animated: true)
+        }
     }
 }

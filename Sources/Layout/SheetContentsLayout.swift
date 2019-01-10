@@ -195,6 +195,14 @@ extension SheetContentsLayout {
                 y: min(upperLimit, max(0, contentOffset.y - attributes.initialOrigin.y)))
         } else if type == .header, settings.isHeaderStretchy {
             attributes.transform = CGAffineTransform(translationX: 0, y: max(0, contentOffset.y - attributes.initialOrigin.y))
+            attributes.contentOffset = contentOffset
+//            if let headerSize = settings.headerSize?.height {
+//                // contnetoffset이 0에 가까워 질수록 alpha는 1이 되어야 한다
+//                print("--------------------- contentoffset = \(contentOffset.y)")
+//                print("--------------------- headerSize = \(headerSize)")
+//
+//                attributes.backgroundAlpha = max(1 - min(1, 1 - (contentOffset.y + headerSize) / headerSize), 0)
+//            }
         }
     }
 }

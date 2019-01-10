@@ -29,6 +29,18 @@ public struct ToolBarItem {
     
     /// Default Sheet ToolBar title color
     public var titleColor: UIColor = .white
+    
+    /// Default Sheet ToolBar line hidden property
+    public var isLineHidden: Bool = false
+    
+    /// Default Sheet ToolBar line color
+    public var lineColor: UIColor = #colorLiteral(red: 0.1176470588, green: 0.1176470588, blue: 0.1176470588, alpha: 1)
+    
+    /// Default Sheet ToolBar `Close` Title
+    public var defaultCloseTitle: String = "Close"
+    
+    /// Default Sheet ToolBar `Back` Title
+    public var defaultBackTitle: String = "Back"
 }
 
 public struct SheetOptions {
@@ -44,7 +56,7 @@ public struct SheetOptions {
     public var sheetToolBarHeight: CGFloat = 50
     
     /// Sheet ToolBar hide property. Defaults to false
-    public var isSheetToolBarHidden = false
+    public var isToolBarHidden = false
     
     // Sheet
     /// Sheet top corner radius. Defaults to 0

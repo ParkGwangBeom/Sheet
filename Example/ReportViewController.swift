@@ -24,7 +24,7 @@ class ReportViewController: SheetContentsViewController {
         return 1000
     }
     
-    override func setupSheetLayout() {
+    override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { indexPath in
             let height: CGFloat = indexPath.section == 0 ? 90 : 50
             return CGSize(width: UIScreen.main.bounds.width, height: height)
@@ -54,7 +54,7 @@ class ReportViewController: SheetContentsViewController {
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        close()
+        dismiss(animated: true)
     }
     
     @IBAction func tappedBackButton(_ sender: Any) {
@@ -62,7 +62,7 @@ class ReportViewController: SheetContentsViewController {
     }
     
     @IBAction func tappedDoneButton(_ sender: Any) {
-        close()
+        dismiss(animated: true)
     }
 }
 
