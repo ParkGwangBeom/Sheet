@@ -40,12 +40,12 @@
 
 ### CocoaPods
 ```bash
-pod 'Sheet', '~> 0.1.0'
+pod 'Sheet', '~> 0.2.0'
 ```
 
 ### Carthage
 ```bash
-github "ParkGwangBeom/Sheet" ~> 0.1.0
+github "ParkGwangBeom/Sheet" ~> 0.2.0
 ```
 
 ### Manually
@@ -74,7 +74,7 @@ class ViewController: SheetContentsViewController {
     }
 
     /// Provide an opportunity to set default settings for collectionview custom layout
-    override func setupSheetLayout() {
+    override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { indexPath in
             let height: CGFloat = indexPath.section == 0 ? 30 : 60
             return CGSize(width: UIScreen.main.bounds.width, height: height)

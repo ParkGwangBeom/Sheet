@@ -36,7 +36,7 @@ open class SheetContentsViewController: UICollectionViewController {
         return closeButton
     }()
     
-    ///
+    /// Sheet ToolBar hide property. Defaults to false
     open var isToolBarHidden: Bool {
         return options.isToolBarHidden
     }
