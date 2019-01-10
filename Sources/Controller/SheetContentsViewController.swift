@@ -83,7 +83,7 @@ open class SheetContentsViewController: UICollectionViewController {
         let velocity = scrollView.panGestureRecognizer.velocity(in: nil)
         if scrollView.contentOffset.y <= -10 && velocity.y >= 400 {
             let diff = UIScreen.main.bounds.height - topMargin
-            let duration = diff / velocity.y
+            let duration = min(0.3, diff / velocity.y)
             sheetNavigationController?.close(duration: TimeInterval(duration))
         }
     }
