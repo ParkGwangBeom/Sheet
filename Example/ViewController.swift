@@ -16,7 +16,11 @@ class ViewController: UIViewController {
     @IBAction func tappedEtc(_ sender: Any) {
         let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListContentsViewController")
         let navigation = SheetNavigationController(rootViewController: vc)
-        present(navigation, animated: true, completion: nil)
+        present(navigation, animated: false, completion: nil)
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return true
     }
 }
 

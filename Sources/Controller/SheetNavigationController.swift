@@ -48,6 +48,7 @@ public class SheetNavigationController: UINavigationController {
         super.viewWillAppear(animated)
 
         let rootViewController = viewControllers.first as? SheetContentsViewController
+        rootViewController?.reload()
         let contentSize = rootViewController?.collectionView?.contentSize ?? .zero
         let visibleContentsHeight = rootViewController?.visibleContentsHeight ?? 0
         let visibleHeight = min(contentSize.height, visibleContentsHeight)

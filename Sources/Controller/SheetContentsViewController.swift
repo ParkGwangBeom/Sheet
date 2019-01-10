@@ -108,6 +108,7 @@ extension SheetContentsViewController {
     }
     
     public func reload() {
+        setupSheetLayout(layout)
         collectionView?.reloadData()
         updateTopMargin()
         collectionView?.performBatchUpdates({
@@ -126,7 +127,7 @@ private extension SheetContentsViewController {
     }
     
     func setupContainerView() {
-        let bottomToolBarHeight: CGFloat = SheetManager.shared.options.isToolBarHidden ? UIEdgeInsets.safeAreaInsets.bottom : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+        let bottomToolBarHeight: CGFloat = isToolBarHidden ? UIEdgeInsets.safeAreaInsets.bottom : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
         
         collectionView?.delaysContentTouches = true
         collectionView?.collectionViewLayout.invalidateLayout()
@@ -144,7 +145,7 @@ private extension SheetContentsViewController {
     }
     
     func updateTopMargin() {
-        let bottomToolBarHeight: CGFloat = SheetManager.shared.options.isToolBarHidden ? UIEdgeInsets.safeAreaInsets.bottom : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+        let bottomToolBarHeight: CGFloat = isToolBarHidden ? UIEdgeInsets.safeAreaInsets.bottom : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
         collectionView?.layoutIfNeeded()
         
         let screenHeight = UIScreen.main.bounds.height
