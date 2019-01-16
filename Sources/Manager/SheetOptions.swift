@@ -77,3 +77,34 @@ public struct SheetOptions {
     /// sheet background color
     public var sheetBackgroundColor: UIColor = .white
 }
+
+public struct SheetAnimationOption {
+    
+    public init() { }
+    
+    public var presentAnimationItem = AnimationItem()
+    
+    public var pushAnimationItem = AnimationItem(duration: 0.5, springDumping: 0.8, initialSpringVelocity: 1)
+}
+
+public struct AnimationItem {
+    
+    public init(duration: TimeInterval = 0.6, springDumping: CGFloat = 0.8, initialSpringVelocity: CGFloat = 1, options: UIView.AnimationOptions = [.curveEaseOut]) {
+        self.duration = duration
+        self.springDumping = springDumping
+        self.initialSpringVelocity = initialSpringVelocity
+        self.options = options
+    }
+    
+    /// sheet present animation duration. Defaults to 0.6
+    public var duration: TimeInterval = 0.6
+    
+    /// sheet present animation spring dumping value. Defaults to 0.8
+    public var springDumping: CGFloat = 0.8
+    
+    /// sheet present animation initial spring velocity. Defaults to 1
+    public var initialSpringVelocity: CGFloat = 1
+    
+    /// sheet present animation options.
+    public var options: UIView.AnimationOptions = [.curveEaseOut]
+}

@@ -40,12 +40,12 @@
 
 ### CocoaPods
 ```bash
-pod 'Sheet', '~> 0.2.4'
+pod 'Sheet', '~> 0.2.5'
 ```
 
 ### Carthage
 ```bash
-github "ParkGwangBeom/Sheet" ~> 0.2.4
+github "ParkGwangBeom/Sheet" ~> 0.2.5
 ```
 
 ### Manually

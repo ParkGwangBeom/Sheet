@@ -17,6 +17,11 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     private var options: SheetOptions {
         return SheetManager.shared.options
     }
+    
+    private var animationOption: SheetAnimationOption {
+        return SheetManager.shared.animationOption
+    }
+    
     private var toTopMargin: CGFloat = 0
     private var fromTopMargin: CGFloat = 0
 
@@ -27,7 +32,7 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     }
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return 0.4
+        return animationOption.pushAnimationItem.duration
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -56,7 +61,7 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         onReady?()
         
-        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+        UIView.animate(withDuration: animationOption.pushAnimationItem.duration, delay: 0, usingSpringWithDamping: animationOption.pushAnimationItem.springDumping, initialSpringVelocity: animationOption.pushAnimationItem.initialSpringVelocity, options: animationOption.pushAnimationItem.options, animations: {
             fromContainer?.alpha = 0
             fromContainer?.contentOffset.y += diff
             

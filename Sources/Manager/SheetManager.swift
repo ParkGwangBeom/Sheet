@@ -13,4 +13,6 @@ import UIKit
     public static let shared = SheetManager()
     
     public var options = SheetOptions()
+    
+    public var animationOption = SheetAnimationOption()
 }

@@ -13,6 +13,10 @@ public class SheetNavigationController: UINavigationController {
     private var options: SheetOptions {
         return SheetManager.shared.options
     }
+    
+    private var animationItem: AnimationItem {
+        return SheetManager.shared.animationOption.presentAnimationItem
+    }
 
     /// Height constraints of the Sheet Toolbar
     public var toolBarHeightConstraint: NSLayoutConstraint?
@@ -55,11 +59,12 @@ public class SheetNavigationController: UINavigationController {
         rootViewController?.collectionView?.transform = CGAffineTransform(translationX: 0, y: visibleHeight + options.sheetToolBarHeight)
         sheetToolBarContainerView?.transform = CGAffineTransform(translationX: 0, y: SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom)
         
-        UIView.animate(withDuration: 0.45, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+        
+        UIView.animate(withDuration: animationItem.duration, delay: 0, usingSpringWithDamping: animationItem.springDumping, initialSpringVelocity: animationItem.initialSpringVelocity, options: animationItem.options, animations: {
             rootViewController?.collectionView?.transform = .identity
         }, completion: nil)
         
-        UIView.animate(withDuration: 0.2) {
+        UIView.animate(withDuration: 0.3) {
             self.backgroundView?.alpha = 1
             self.sheetToolBarContainerView?.transform = .identity
         }
