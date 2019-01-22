@@ -108,11 +108,18 @@ extension SheetContentsViewController {
     }
     
     public func reload() {
+        let before = topMargin
         setupSheetLayout(layout)
         collectionView?.reloadData()
         updateTopMargin()
-        collectionView?.performBatchUpdates({
-            self.collectionView?.collectionViewLayout.invalidateLayout()
+        collectionView?.collectionViewLayout.invalidateLayout()
+        let after = topMargin
+        let diff = before - after
+        
+        collectionView?.transform = CGAffineTransform(translationX: 0, y: diff)
+        
+        UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 1, options: [.curveLinear], animations: {
+            self.collectionView?.transform = .identity
         }, completion: nil)
     }
 }

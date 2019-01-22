@@ -52,7 +52,7 @@ class LoadingViewController: SheetContentsViewController {
     
     override func setupSheetLayout(_ layout: SheetContentsLayout) {
         layout.settings.itemSize = { [weak self] _ in
-            let height: CGFloat = self?.loaingState == .loading ? 130 : 60
+            let height: CGFloat = self?.loaingState == .loading ? 150 : 61
             return CGSize(width: UIScreen.main.bounds.width, height: height)
         }
         layout.settings.sectionHeaderSize = { _ in
@@ -63,7 +63,7 @@ class LoadingViewController: SheetContentsViewController {
     }
     
     override var visibleContentsHeight: CGFloat {
-        return 700
+        return 350 + 41
     }
     
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
