@@ -54,8 +54,8 @@ class WriteViewController: SheetContentsViewController {
 extension WriteViewController {
     
     func registNotifications() {
-        NotificationCenter.default.addObserver(self, selector: #selector(willShowKeyboard), name: .UIKeyboardWillShow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(willHideKeyboard), name: .UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willShowKeyboard), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(willHideKeyboard), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     @objc
@@ -92,11 +92,11 @@ class WriteCell: UICollectionViewCell {
 extension Notification {
     
     func keyboardAnimation(_ animations: @escaping (CGSize) -> Void, completion: ((Bool, CGSize) -> Void)?) {
-        let duration = userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0
-        let curve = userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? UInt ?? 0
-        let keyboardRect = userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect ?? .zero
+        let duration = userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0
+        let curve = userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
+        let keyboardRect = userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect ?? .zero
         
-        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(rawValue: curve), animations: {
+        UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(rawValue: curve), animations: {
             animations(keyboardRect.size)
         }, completion: { flag in
             completion?(flag, keyboardRect.size)

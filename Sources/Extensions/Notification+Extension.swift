@@ -11,11 +11,11 @@ import UIKit
 extension Notification {
     
     func keyboardAnimation(_ animations: @escaping (CGSize) -> Void, completion: @escaping (Bool, CGSize) -> Void) {
-        let duration = userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0
-        let curve = userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? UInt ?? 0
-        let keyboardRect = userInfo?[UIKeyboardFrameEndUserInfoKey] as? CGRect ?? .zero
+        let duration = userInfo?[UIResponder.keyboardAnimationDurationUserInfoKey] as? TimeInterval ?? 0
+        let curve = userInfo?[UIResponder.keyboardAnimationCurveUserInfoKey] as? UInt ?? 0
+        let keyboardRect = userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect ?? .zero
         
-        UIView.animate(withDuration: duration, delay: 0, options: UIViewAnimationOptions(rawValue: curve), animations: {
+        UIView.animate(withDuration: duration, delay: 0, options: UIView.AnimationOptions(rawValue: curve), animations: {
             animations(keyboardRect.size)
         }, completion: { flag in
             completion(flag, keyboardRect.size)

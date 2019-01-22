@@ -65,7 +65,7 @@ extension SheetContentsLayout {
         
         for section in 0..<collectionView.numberOfSections {
             if let sectionHeaderSize = settings.sectionHeaderSize?(IndexPath(item: 0, section: section)) {
-                let sectionHeaderAttributes = SheetLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, with: IndexPath(item: 0, section: section))
+                let sectionHeaderAttributes = SheetLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, with: IndexPath(item: 0, section: section))
                 prepareSupplementrayElement(size: sectionHeaderSize, type: .sectionHeader, attributes: sectionHeaderAttributes)
             }
             
@@ -96,7 +96,7 @@ extension SheetContentsLayout {
             }
             
             if let sectionFooterSize = settings.sectionFooterSize?(IndexPath(item: 1, section: section)) {
-                let sectionFooterAttributes = SheetLayoutAttributes(forSupplementaryViewOfKind: UICollectionElementKindSectionFooter, with: IndexPath(item: 1, section: section))
+                let sectionFooterAttributes = SheetLayoutAttributes(forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, with: IndexPath(item: 1, section: section))
                 prepareSupplementrayElement(size: sectionFooterSize, type: .sectionFooter, attributes: sectionFooterAttributes)
             }
         }
@@ -139,9 +139,9 @@ extension SheetContentsLayout {
     
     public override func layoutAttributesForSupplementaryView(ofKind elementKind: String, at indexPath: IndexPath) -> UICollectionViewLayoutAttributes? {
         switch elementKind {
-        case UICollectionElementKindSectionHeader:
+        case UICollectionView.elementKindSectionHeader:
             return cache[.sectionHeader]?[indexPath]
-        case UICollectionElementKindSectionFooter:
+        case UICollectionView.elementKindSectionFooter:
             return cache[.sectionFooter]?[indexPath]
         case SheetLayoutElement.header.kind:
             return cache[.header]?[indexPath]
