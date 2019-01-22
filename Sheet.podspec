@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Sheet"
-  s.version      = "0.2.5"
+  s.version      = "0.3.0"
   s.swift_version = '4.0'
   s.summary      = "Navigationable Action Sheet"
   s.description  = "💦 Navigable custom action sheet like Flipboard"
