@@ -206,11 +206,17 @@ extension SheetNavigationController: UINavigationControllerDelegate {
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
         let viewController = viewController as? SheetContentsViewController
         if viewController?.isToolBarHidden ?? false {
-            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+            let isRootViewController = viewController?.isRootViewController ?? false
+            if isRootViewController  {
                 self.toolBarBottomConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
                 self.view.layoutIfNeeded()
-            }) { _ in
-                
+            } else {
+                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+                    self.toolBarBottomConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+                    self.view.layoutIfNeeded()
+                }) { _ in
+                    
+                }
             }
         } else {
             updateSheetToolBar(toolBar: viewController?.sheetToolBar)
