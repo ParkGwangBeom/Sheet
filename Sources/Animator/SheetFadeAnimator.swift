@@ -37,11 +37,13 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
         let containerView = transitionContext.containerView
-        let fromViewController = transitionContext.viewController(forKey: .from) as? SheetContentsViewController
-        let toViewController = transitionContext.viewController(forKey: .to) as? SheetContentsViewController
+        let fromViewController = transitionContext.viewController(forKey: .from)
+        let toViewController = transitionContext.viewController(forKey: .to)
 
-        let fromContainer = fromViewController?.collectionView
-        let toContainer = toViewController?.collectionView
+        let fromContainer = fromViewController?.view
+
+        let fromContent = fromViewController as? SheetContent
+        let toContent = toViewController as? SheetContent
         
         let backgroundView = UIView()
         backgroundView.backgroundColor = SheetManager.shared.options.sheetBackgroundColor
@@ -56,19 +58,30 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
         let diff = fromTopMargin - toTopMargin
 
-        let toLayoutTopMargin = (toContainer?.collectionViewLayout as? SheetContentsLayout)?.settings.topMargin ?? 0
-        toContainer?.contentOffset.y = isPush ? -diff : toLayoutTopMargin - fromTopMargin
+        var toLayoutTopMargin: CGFloat = 0
+        if let toSheetContentViewController = toViewController as? SheetContentsViewController {
+            let toLayout = toSheetContentViewController.collectionView.collectionViewLayout as? SheetContentsLayout
+            toLayoutTopMargin = toLayout?.settings.topMargin ?? 0
+        }
         
+        toContent?.contentScrollView.contentOffset.y = isPush ? -diff : toLayoutTopMargin - fromTopMargin
+        
+        if let toSheetContentViewController = toViewController as? SheetContentsViewController,
+            let toLayout = toSheetContentViewController.collectionView.collectionViewLayout as? SheetContentsLayout {
+            let topMargin = toLayout.settings.topMargin
+            toContent?.contentScrollView.contentOffset.y = isPush ? -diff : topMargin - fromTopMargin
+        }
+
         onReady?()
         
         UIView.animate(withDuration: animationOption.pushAnimationItem.duration, delay: 0, usingSpringWithDamping: animationOption.pushAnimationItem.springDumping, initialSpringVelocity: animationOption.pushAnimationItem.initialSpringVelocity, options: animationOption.pushAnimationItem.options, animations: {
             fromContainer?.alpha = 0
-            fromContainer?.contentOffset.y += diff
+            fromContent?.contentScrollView.contentOffset.y += diff
             
             backgroundView.frame = CGRect(x: 0, y: self.toTopMargin, width: containerView.bounds.width, height: containerView.bounds.height)
 
             toView.alpha = 1
-            toContainer?.contentOffset.y = self.isPush ? 0 : toLayoutTopMargin - self.toTopMargin
+            toContent?.contentScrollView.contentOffset.y = self.isPush ? 0 : toLayoutTopMargin - self.toTopMargin
         }) { _ in
             self.onComplete?()
             backgroundView.removeFromSuperview()

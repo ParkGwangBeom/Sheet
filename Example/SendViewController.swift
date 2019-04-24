@@ -29,10 +29,9 @@ class SendViewController: SheetContentsViewController, FristsListContainerCellDe
     override var visibleContentsHeight: CGFloat {
         return 500
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        sheetToolBar = customToolBar
+
+    override var sheetToolBar: UIView? {
+        return customToolBar
     }
     
     override func registCollectionElement() {

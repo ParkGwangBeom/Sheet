@@ -17,10 +17,13 @@ class CteateListViewController: SheetContentsViewController {
         return 370
     }
     
+    override var sheetToolBar: UIView? {
+        return customToolBar
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         registNotifications()
-        sheetToolBar = customToolBar
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
             let cell = self.collectionView?.cellForItem(at: IndexPath(row: 0, section: 0)) as? CreateCell

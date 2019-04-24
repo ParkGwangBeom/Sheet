@@ -42,6 +42,7 @@
 		4AEF0F4E216244A100FF034E /* Optional+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0F4C2162449F00FF034E /* Optional+Extension.swift */; };
 		4AEF0F5121624BF400FF034E /* MoveItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0F5021624BF400FF034E /* MoveItemViewController.swift */; };
 		8933C7851EB5B820000D00A4 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8933C7841EB5B820000D00A4 /* Sheet.swift */; };
+		CE4924A3226FFD9C00033244 /* FullViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE4924A2226FFD9C00033244 /* FullViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +109,7 @@
 		8933C7891EB5B82A000D00A4 /* SheetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SheetTests.swift; sourceTree = "<group>"; };
 		AD2FAA261CD0B6D800659CF4 /* Sheet.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Sheet.plist; sourceTree = "<group>"; };
 		AD2FAA281CD0B6E100659CF4 /* SheetTests.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SheetTests.plist; sourceTree = "<group>"; };
+		CE4924A2226FFD9C00033244 /* FullViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,6 +189,7 @@
 				4AEF0F08216236A600FF034E /* AppDelegate.swift */,
 				4AEF0F0F216236A700FF034E /* Assets.xcassets */,
 				4AEF0F14216236A700FF034E /* Info.plist */,
+				CE4924A2226FFD9C00033244 /* FullViewController.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -355,8 +358,10 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
+				global,
 			);
 			mainGroup = 52D6D9721BEFF229002C0205;
 			productRefGroup = 52D6D97D1BEFF229002C0205 /* Products */;
@@ -408,6 +413,7 @@
 				4AEF0F3A2162370400FF034E /* LoadingViewController.swift in Sources */,
 				4AEF0F392162370400FF034E /* LoginViewController.swift in Sources */,
 				4AEF0F2F2162370400FF034E /* ReportViewController.swift in Sources */,
+				CE4924A3226FFD9C00033244 /* FullViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

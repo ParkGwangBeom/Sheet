@@ -16,11 +16,14 @@ class WriteViewController: SheetContentsViewController {
     override var visibleContentsHeight: CGFloat {
         return 370
     }
+    
+    override var sheetToolBar: UIView? {
+        return customToolBar
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         registNotifications()
-        sheetToolBar = customToolBar
     }
 
     deinit {
