@@ -145,7 +145,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rdm-k5-DJ4">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="80" width="375" height="587"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sOx-NQ-Xmm">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="128"/>
@@ -162,13 +162,23 @@
                                     <constraint firstAttribute="trailing" secondItem="sOx-NQ-Xmm" secondAttribute="trailing" id="kA2-CB-4Yq"/>
                                 </constraints>
                             </scrollView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VKI-Hb-kq3">
+                                <rect key="frame" x="0.0" y="20" width="375" height="60"/>
+                                <color key="backgroundColor" red="0.054901960780000002" green="0.87843137250000003" blue="0.4431372549" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="mcR-Sr-KaH"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="VKI-Hb-kq3" firstAttribute="top" secondItem="nrK-Zz-HjC" secondAttribute="top" id="57a-q1-Qtz"/>
                             <constraint firstItem="sOx-NQ-Xmm" firstAttribute="width" secondItem="Tm5-b6-DEO" secondAttribute="width" id="77b-rB-SCQ"/>
+                            <constraint firstItem="Rdm-k5-DJ4" firstAttribute="top" secondItem="VKI-Hb-kq3" secondAttribute="bottom" id="EJd-n5-aJQ"/>
+                            <constraint firstItem="VKI-Hb-kq3" firstAttribute="leading" secondItem="nrK-Zz-HjC" secondAttribute="leading" id="EYY-ey-dBU"/>
                             <constraint firstAttribute="trailing" secondItem="Rdm-k5-DJ4" secondAttribute="trailing" id="Mju-s1-gec"/>
-                            <constraint firstItem="Rdm-k5-DJ4" firstAttribute="top" secondItem="Tm5-b6-DEO" secondAttribute="top" id="SC3-Zq-RqS"/>
                             <constraint firstItem="Rdm-k5-DJ4" firstAttribute="leading" secondItem="Tm5-b6-DEO" secondAttribute="leading" id="rHw-md-hix"/>
+                            <constraint firstItem="nrK-Zz-HjC" firstAttribute="trailing" secondItem="VKI-Hb-kq3" secondAttribute="trailing" id="sd8-Us-t5T"/>
                             <constraint firstAttribute="bottom" secondItem="Rdm-k5-DJ4" secondAttribute="bottom" id="zFb-Pi-iS4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="nrK-Zz-HjC"/>

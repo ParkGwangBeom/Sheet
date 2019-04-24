@@ -62,26 +62,35 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         if let toSheetContentViewController = toViewController as? SheetContentsViewController {
             let toLayout = toSheetContentViewController.collectionView.collectionViewLayout as? SheetContentsLayout
             toLayoutTopMargin = toLayout?.settings.topMargin ?? 0
+            toContent?.contentScrollView.contentOffset.y = isPush ? -diff : toLayoutTopMargin - fromTopMargin
+        } else {
+            toView.transform = CGAffineTransform.init(translationX: 0, y: isPush ? diff : -toLayoutTopMargin + fromTopMargin)
+//            toContent?.contentScrollView.contentOffset.y = isPush ? -diff : toLayoutTopMargin - fromTopMargin
         }
-        
-        toContent?.contentScrollView.contentOffset.y = isPush ? -diff : toLayoutTopMargin - fromTopMargin
-        
-        if let toSheetContentViewController = toViewController as? SheetContentsViewController,
-            let toLayout = toSheetContentViewController.collectionView.collectionViewLayout as? SheetContentsLayout {
-            let topMargin = toLayout.settings.topMargin
-            toContent?.contentScrollView.contentOffset.y = isPush ? -diff : topMargin - fromTopMargin
-        }
+
+//        toContent?.contentScrollView.contentOffset.y = isPush ? -diff : toLayoutTopMargin - fromTopMargin
 
         onReady?()
         
         UIView.animate(withDuration: animationOption.pushAnimationItem.duration, delay: 0, usingSpringWithDamping: animationOption.pushAnimationItem.springDumping, initialSpringVelocity: animationOption.pushAnimationItem.initialSpringVelocity, options: animationOption.pushAnimationItem.options, animations: {
             fromContainer?.alpha = 0
-            fromContent?.contentScrollView.contentOffset.y += diff
+            if fromViewController is SheetContentsViewController {
+                fromContent?.contentScrollView.contentOffset.y += diff
+            } else {
+                fromViewController?.view.transform = CGAffineTransform.init(translationX: 0, y: -diff)
+            }
+            
             
             backgroundView.frame = CGRect(x: 0, y: self.toTopMargin, width: containerView.bounds.width, height: containerView.bounds.height)
 
             toView.alpha = 1
-            toContent?.contentScrollView.contentOffset.y = self.isPush ? 0 : toLayoutTopMargin - self.toTopMargin
+            
+            if toViewController is SheetContentsViewController {
+                toContent?.contentScrollView.contentOffset.y = self.isPush ? 0 : toLayoutTopMargin - self.toTopMargin
+            } else {
+                toView.transform = .identity
+            }
+            
         }) { _ in
             self.onComplete?()
             backgroundView.removeFromSuperview()
