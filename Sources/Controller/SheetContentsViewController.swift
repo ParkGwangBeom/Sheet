@@ -188,13 +188,22 @@ public protocol SheetContent {
     var visibleContentsHeight: CGFloat { get }
     
     var sheetToolBar: UIView? { get }
-    
-    var contentScrollView: UIScrollView { get }
 }
 
-extension SheetContent {
+public extension SheetContent { 
     
-    var isToolBarHidden: Bool { return false }
+    var isToolBarHidden: Bool { return SheetManager.shared.options.isToolBarHidden }
     
-    public var sheetToolBar: UIView? { return nil }
+    var sheetToolBar: UIView? { return nil }
+    
+    var visibleContentsHeight: CGFloat { return SheetManager.shared.options.defaultVisibleContentHeight }
+
+}
+
+extension SheetContent where Self: UIViewController {
+    
+    public func controlToolBar(isShow: Bool, animated: Bool) {
+        let sheetNavi = navigationController as? SheetNavigationController
+        sheetNavi?.controlToolBar(isShow: isShow, animated: animated)
+    }
 }

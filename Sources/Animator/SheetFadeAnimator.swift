@@ -62,7 +62,7 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         if let toSheetContentViewController = toViewController as? SheetContentsViewController {
             let toLayout = toSheetContentViewController.collectionView.collectionViewLayout as? SheetContentsLayout
             toLayoutTopMargin = toLayout?.settings.topMargin ?? 0
-            toContent?.contentScrollView.contentOffset.y = isPush ? -diff : toLayoutTopMargin - fromTopMargin
+            toSheetContentViewController.collectionView.contentOffset.y = isPush ? -diff : toLayoutTopMargin - fromTopMargin
         } else {
             toView.transform = CGAffineTransform.init(translationX: 0, y: isPush ? diff : -toLayoutTopMargin + fromTopMargin)
 //            toContent?.contentScrollView.contentOffset.y = isPush ? -diff : toLayoutTopMargin - fromTopMargin
@@ -74,8 +74,8 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
         
         UIView.animate(withDuration: animationOption.pushAnimationItem.duration, delay: 0, usingSpringWithDamping: animationOption.pushAnimationItem.springDumping, initialSpringVelocity: animationOption.pushAnimationItem.initialSpringVelocity, options: animationOption.pushAnimationItem.options, animations: {
             fromContainer?.alpha = 0
-            if fromViewController is SheetContentsViewController {
-                fromContent?.contentScrollView.contentOffset.y += diff
+            if let fromSheetViewController = fromViewController as? SheetContentsViewController {
+                fromSheetViewController.collectionView.contentOffset.y += diff
             } else {
                 fromViewController?.view.transform = CGAffineTransform.init(translationX: 0, y: -diff)
             }
@@ -85,8 +85,8 @@ class SheetFadeAnimator: NSObject, UIViewControllerAnimatedTransitioning {
 
             toView.alpha = 1
             
-            if toViewController is SheetContentsViewController {
-                toContent?.contentScrollView.contentOffset.y = self.isPush ? 0 : toLayoutTopMargin - self.toTopMargin
+            if let toSheetViewController = toViewController as? SheetContentsViewController {
+                toSheetViewController.collectionView.contentOffset.y = self.isPush ? 0 : toLayoutTopMargin - self.toTopMargin
             } else {
                 toView.transform = .identity
             }

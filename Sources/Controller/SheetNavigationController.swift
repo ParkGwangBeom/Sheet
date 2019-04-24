@@ -119,6 +119,19 @@ public class SheetNavigationController: UINavigationController {
             self.dismiss(animated: false, completion: completion)
         }
     }
+    
+    func controlToolBar(isShow: Bool, animated: Bool) {
+        let bottomConstraint = isShow ? 0 : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+        if animated {
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+                self.toolBarBottomConstraint?.constant = bottomConstraint
+                self.view.layoutIfNeeded()
+            }) { _ in
+            }
+        } else {
+            self.toolBarBottomConstraint?.constant = bottomConstraint
+        }
+    }
 }
 
 extension SheetNavigationController {
@@ -243,22 +256,24 @@ extension SheetNavigationController: UINavigationControllerDelegate {
                 self.toolBarBottomConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
                 self.view.layoutIfNeeded()
             } else {
-                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
-                    self.toolBarBottomConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
-                    self.view.layoutIfNeeded()
-                }) { _ in
-                    
-                }
+                controlToolBar(isShow: false, animated: true)
+//                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+//                    self.toolBarBottomConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+//                    self.view.layoutIfNeeded()
+//                }) { _ in
+//
+//                }
             }
         } else {
             updateSheetToolBar(toolBarView: sheetContent?.sheetToolBar)
             if isFirstCall {
-                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
-                    self.toolBarBottomConstraint?.constant = 0
-                    self.view.layoutIfNeeded()
-                }) { _ in
-                    
-                }
+                controlToolBar(isShow: true, animated: true)
+//                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+//                    self.toolBarBottomConstraint?.constant = 0
+//                    self.view.layoutIfNeeded()
+//                }) { _ in
+//
+//                }
             }
         }
     }

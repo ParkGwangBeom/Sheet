@@ -85,6 +85,7 @@ class SendViewController: SheetContentsViewController, FristsListContainerCellDe
     }
     
     func tappedFriend(isSelected: Bool) {
+        controlToolBar(isShow: false, animated: true)
         doneButton.isEnabled = isSelected
     }
 }

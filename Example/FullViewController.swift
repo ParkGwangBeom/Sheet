@@ -10,11 +10,6 @@ import UIKit
 import Sheet
 
 class FullViewController: UIViewController, SheetContent {
-    
-    var sheetToolBar1: UIView? {
-        return nil
-    }
-    
 
     @IBOutlet weak var scrollView: UIScrollView!
     
