@@ -190,7 +190,12 @@ public protocol SheetContent {
     var sheetToolBar: UIView? { get }
 }
 
-public extension SheetContent { 
+public extension SheetContent {
+    
+    var topMargin: CGFloat {
+        get { return 0 }
+        set {}
+    }
     
     var isToolBarHidden: Bool { return SheetManager.shared.options.isToolBarHidden }
     
