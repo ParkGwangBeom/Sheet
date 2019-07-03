@@ -28,6 +28,10 @@ class MylistViewController: SheetContentsViewController {
     override var isFullScreenContent: Bool {
         return true
     }
+    
+    override var isToolBarHidden: Bool {
+        return true
+    }
 
     override func registCollectionElement() {
         let nib = UINib(nibName: "TitleHeaderView", bundle: nil)

@@ -58,7 +58,7 @@ class ListContentsViewController: SheetContentsViewController {
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if indexPath.item == 1 {
-            let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MylistViewController")
+            let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "FullViewController")
             navigationController?.pushViewController(vc, animated: true)
         } else if indexPath.item == 2 {
             let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SendViewController")

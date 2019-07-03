@@ -48,6 +48,8 @@ public class SheetNavigationController: UINavigationController {
         setupViews()
     }
 
+    
+    private var isFirstCall: Bool = false
     public override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
@@ -64,9 +66,11 @@ public class SheetNavigationController: UINavigationController {
             rootViewController?.collectionView?.transform = .identity
         }, completion: nil)
         
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: 0.3, animations: {
             self.backgroundView?.alpha = 1
             self.sheetToolBarContainerView?.transform = .identity
+        }) { _ in
+            self.isFirstCall = true
         }
     }
 
@@ -75,7 +79,7 @@ public class SheetNavigationController: UINavigationController {
     }
     
     public override func pushViewController(_ viewController: UIViewController, animated: Bool) {
-        guard viewController is SheetContentsViewController else {
+        guard viewController is SheetContent else {
             fatalError("viewController is not a SheetContentsViewController")
         }
         super.pushViewController(viewController, animated: animated)
@@ -90,10 +94,10 @@ public class SheetNavigationController: UINavigationController {
     }
 
     func close(duration: TimeInterval = 0.2, completion: (() -> Void)? = nil) {
-        let contentsViewController = viewControllers.last as? SheetContentsViewController
+        let contentsViewController = viewControllers.last
         contentsViewController?.view.isHidden = true
         
-        let topMargin = contentsViewController?.topMargin ?? 0
+        let topMargin = (contentsViewController as? SheetContent)?.topMargin ?? 0
         let snapShot = contentsViewController?.view.snapshotView(afterScreenUpdates: false) ?? UIView()
         snapShot.frame = view.bounds
         
@@ -113,6 +117,19 @@ public class SheetNavigationController: UINavigationController {
         }) { _ in
             snapShot.removeFromSuperview()
             self.dismiss(animated: false, completion: completion)
+        }
+    }
+    
+    func controlToolBar(isShow: Bool, animated: Bool) {
+        let bottomConstraint = isShow ? 0 : SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+        if animated {
+            UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+                self.toolBarBottomConstraint?.constant = bottomConstraint
+                self.view.layoutIfNeeded()
+            }) { _ in
+            }
+        } else {
+            self.toolBarBottomConstraint?.constant = bottomConstraint
         }
     }
 }
@@ -165,8 +182,36 @@ private extension SheetNavigationController {
         self.sheetToolBarContainerView = containerView
     }
     
-    func updateSheetToolBar(toolBar: UIView?) {
-        guard let containerView = sheetToolBarContainerView, let toolBar = toolBar else {
+    @objc
+    func tappedDefaultButton() {
+        if viewControllers.count == 1 {
+            close()
+        } else {
+            _ = popViewController(animated: true)
+        }
+    }
+    
+    func updateSheetToolBar(toolBarView: UIView?) {
+        var toolBarTemp = toolBarView
+        if toolBarTemp == nil {
+            let closeButton = UIButton(type: .system)
+            let title = viewControllers.count == 1 ? options.defaultToolBarItem.defaultCloseTitle : options.defaultToolBarItem.defaultBackTitle
+            closeButton.setTitle(title, for: .normal)
+            closeButton.titleLabel?.font = options.defaultToolBarItem.font
+            closeButton.setTitleColor(options.defaultToolBarItem.titleColor, for: .normal)
+            closeButton.addTarget(self, action: #selector(tappedDefaultButton), for: .touchUpInside)
+            
+            if !options.defaultToolBarItem.isLineHidden {
+                let border = CALayer()
+                border.backgroundColor = options.defaultToolBarItem.lineColor.cgColor
+                border.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0.5)
+                closeButton.layer.addSublayer(border)
+            }
+            
+            toolBarTemp = closeButton
+        }
+        
+        guard let containerView = sheetToolBarContainerView, let toolBar = toolBarTemp else {
             return
         }
         
@@ -204,33 +249,41 @@ extension SheetNavigationController: UIViewControllerTransitioningDelegate {
 extension SheetNavigationController: UINavigationControllerDelegate {
     
     public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-        let viewController = viewController as? SheetContentsViewController
-        if viewController?.isToolBarHidden ?? false {
-            let isRootViewController = viewController?.isRootViewController ?? false
+        let sheetContent = viewController as? SheetContent
+        if sheetContent?.isToolBarHidden ?? false {
+            let isRootViewController = viewController == viewControllers.first
             if isRootViewController  {
                 self.toolBarBottomConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
                 self.view.layoutIfNeeded()
             } else {
-                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
-                    self.toolBarBottomConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
-                    self.view.layoutIfNeeded()
-                }) { _ in
-                    
-                }
+                controlToolBar(isShow: false, animated: true)
+//                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+//                    self.toolBarBottomConstraint?.constant = SheetManager.shared.options.sheetToolBarHeight + UIEdgeInsets.safeAreaInsets.bottom
+//                    self.view.layoutIfNeeded()
+//                }) { _ in
+//
+//                }
             }
         } else {
-            updateSheetToolBar(toolBar: viewController?.sheetToolBar)
+            updateSheetToolBar(toolBarView: sheetContent?.sheetToolBar)
+            if isFirstCall {
+                controlToolBar(isShow: true, animated: true)
+//                UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.75, initialSpringVelocity: 1, options: [.curveEaseOut], animations: {
+//                    self.toolBarBottomConstraint?.constant = 0
+//                    self.view.layoutIfNeeded()
+//                }) { _ in
+//
+//                }
+            }
         }
     }
 
     public func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         
-        let from = fromVC as? SheetContentsViewController
-        let to = toVC as? SheetContentsViewController
-        to?.view.layoutIfNeeded()
+        toVC.view.layoutIfNeeded()
 
-        let fromTopMargin: CGFloat = from?.topMargin ?? 0
-        var toTopMargin: CGFloat = to?.topMargin ?? 0
+        let fromTopMargin: CGFloat = (fromVC as? SheetContent)?.topMargin ?? 0
+        var toTopMargin: CGFloat = (toVC as? SheetContent)?.topMargin ?? 0
 
         if operation == .push {
             topMargins.append(fromTopMargin)
@@ -242,7 +295,7 @@ extension SheetNavigationController: UINavigationControllerDelegate {
         animator.isPush = operation == .push
         animator.onReady = { }
         animator.onComplete = {
-            from?.collectionView?.alpha = 1
+            fromVC.view.alpha = 1
         }
         return animator
     }

@@ -8,33 +8,19 @@
 
 import UIKit
 
-open class SheetContentsViewController: UICollectionViewController {
-
+open class SheetContentsViewController: UICollectionViewController, SheetContent {
+    
     private var options: SheetOptions {
         return SheetManager.shared.options
     }
 
     private var layout = SheetContentsLayout()
     
-    var topMargin: CGFloat = 0
-    
-    public lazy var sheetToolBar: UIView = {
-        let closeButton = UIButton(type: .system)
-        let title = isRootViewController ? options.defaultToolBarItem.defaultCloseTitle : options.defaultToolBarItem.defaultBackTitle
-        closeButton.setTitle(title, for: .normal)
-        closeButton.titleLabel?.font = options.defaultToolBarItem.font
-        closeButton.setTitleColor(options.defaultToolBarItem.titleColor, for: .normal)
-        closeButton.addTarget(self, action: #selector(tappedDefaultButton), for: .touchUpInside)
-        
-        if !options.defaultToolBarItem.isLineHidden {
-            let border = CALayer()
-            border.backgroundColor = options.defaultToolBarItem.lineColor.cgColor
-            border.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 0.5)
-            closeButton.layer.addSublayer(border)
-        }
-        
-        return closeButton
-    }()
+    public var topMargin: CGFloat = 0
+
+    public var contentScrollView: UIScrollView {
+        return collectionView
+    }
     
     open var isFullScreenContent: Bool {
         return false
@@ -48,6 +34,10 @@ open class SheetContentsViewController: UICollectionViewController {
     /// Sheet visible contents height. If contentSize height is less than visibleContentsHeight, contentSize height is applied.
     open var visibleContentsHeight: CGFloat {
         return SheetManager.shared.options.defaultVisibleContentHeight
+    }
+    
+    open var sheetToolBar: UIView? {
+        return nil
     }
     
     open override func viewDidLoad() {
@@ -186,5 +176,39 @@ private extension SheetContentsViewController {
         } else {
             navigationController?.popViewController(animated: true)
         }
+    }
+}
+
+public protocol SheetContent {
+    
+    var topMargin: CGFloat { get set }
+    
+    var isToolBarHidden: Bool { get }
+
+    var visibleContentsHeight: CGFloat { get }
+    
+    var sheetToolBar: UIView? { get }
+}
+
+public extension SheetContent {
+    
+    var topMargin: CGFloat {
+        get { return 0 }
+        set {}
+    }
+    
+    var isToolBarHidden: Bool { return SheetManager.shared.options.isToolBarHidden }
+    
+    var sheetToolBar: UIView? { return nil }
+    
+    var visibleContentsHeight: CGFloat { return SheetManager.shared.options.defaultVisibleContentHeight }
+
+}
+
+extension SheetContent where Self: UIViewController {
+    
+    public func controlToolBar(isShow: Bool, animated: Bool) {
+        let sheetNavi = navigationController as? SheetNavigationController
+        sheetNavi?.controlToolBar(isShow: isShow, animated: animated)
     }
 }
