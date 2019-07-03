@@ -47,6 +47,8 @@ public struct ToolBarItem {
 
 public struct SheetOptions {
     
+    public init() { }
+    
     // Button
     /// Sheet ToolBar Background Color
     public var defaultToolBarBackgroundColor: UIColor = .black
