@@ -24,6 +24,9 @@ public class SheetNavigationController: UINavigationController {
     /// Bottom constraints of the Sheet Toolbar
     public var toolBarBottomConstraint: NSLayoutConstraint?
     
+    /// A block that will be run after the `SheetNavigationController` has been dismissed
+    public var onDismissed: (() -> Void)?
+    
     private var backgroundView: UIView?
     var sheetToolBarContainerView: UIView?
     private var topMargins: [CGFloat] = []
@@ -116,7 +119,10 @@ public class SheetNavigationController: UINavigationController {
             }
         }) { _ in
             snapShot.removeFromSuperview()
-            self.dismiss(animated: false, completion: completion)
+            self.dismiss(animated: false) {
+                self.onDismissed?()
+                completion?()
+            }
         }
     }
     

@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     @IBAction func tappedEtc(_ sender: Any) {
         let vc = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ListContentsViewController")
         let navigation = SheetNavigationController(rootViewController: vc)
+        navigation.onDismissed = {
+            print("✅ SheetNavigationController is dismissed")
+        }
         present(navigation, animated: false, completion: nil)
     }
     
