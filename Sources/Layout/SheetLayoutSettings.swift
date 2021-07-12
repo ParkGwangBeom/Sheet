@@ -12,7 +12,7 @@ public struct SheetLayoutSettings {
 
     var topMargin: CGFloat = 0
 
-    var minMargin: CGFloat = 0
+    public var minTopMargin: CGFloat = 0
     
     /// Whether the header view is stiky. Defaults to true
     public var isHeaderStretchy = true

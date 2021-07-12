@@ -149,7 +149,7 @@ private extension SheetContentsViewController {
         let contentHeight = collectionView?.contentSize.height ?? 0
         let visibleHeight = min(contentHeight - layout.settings.topMargin, visibleContentsHeight)
         
-        topMargin = isFullScreenContent ? 0 : max(screenHeight - layout.settings.minMargin - visibleHeight - bottomToolBarHeight, 0)
+        topMargin = isFullScreenContent ? 0 : max(screenHeight - layout.settings.minTopMargin - visibleHeight - bottomToolBarHeight, 0)
         layout.settings.topMargin = topMargin
     }
 
