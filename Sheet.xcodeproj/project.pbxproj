@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0814D809269D7DD80039424F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AEF0F3E2162371700FF034E /* Main.storyboard */; };
 		4AEF0EF8216235F200FF034E /* SheetFadeAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0EEB216235F100FF034E /* SheetFadeAnimator.swift */; };
 		4AEF0EF9216235F200FF034E /* SheetModalScaleAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0EEC216235F100FF034E /* SheetModalScaleAnimator.swift */; };
 		4AEF0EFA216235F200FF034E /* SheetMoveAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0EED216235F100FF034E /* SheetMoveAnimator.swift */; };
@@ -34,7 +35,6 @@
 		4AEF0F392162370400FF034E /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0F2B2162370400FF034E /* LoginViewController.swift */; };
 		4AEF0F3A2162370400FF034E /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0F2C2162370400FF034E /* LoadingViewController.swift */; };
 		4AEF0F3B2162370400FF034E /* SendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0F2D2162370400FF034E /* SendViewController.swift */; };
-		4AEF0F3F2162371700FF034E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4AEF0F3D2162371700FF034E /* Main.storyboard */; };
 		4AEF0F4221623F4600FF034E /* SheetManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0F4021623F0D00FF034E /* SheetManager.swift */; };
 		4AEF0F4521623FDD00FF034E /* SheetLayoutElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0F4321623F6500FF034E /* SheetLayoutElement.swift */; };
 		4AEF0F482162423A00FF034E /* Notification+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AEF0F462162423700FF034E /* Notification+Extension.swift */; };
@@ -97,7 +97,7 @@
 		4AEF0F2B2162370400FF034E /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		4AEF0F2C2162370400FF034E /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		4AEF0F2D2162370400FF034E /* SendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendViewController.swift; sourceTree = "<group>"; };
-		4AEF0F3E2162371700FF034E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
+		4AEF0F3E2162371700FF034E /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		4AEF0F4021623F0D00FF034E /* SheetManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetManager.swift; sourceTree = "<group>"; };
 		4AEF0F4321623F6500FF034E /* SheetLayoutElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SheetLayoutElement.swift; sourceTree = "<group>"; };
 		4AEF0F462162423700FF034E /* Notification+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+Extension.swift"; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				4AEF0F212162370300FF034E /* XIB */,
-				4AEF0F3D2162371700FF034E /* Main.storyboard */,
+				4AEF0F3E2162371700FF034E /* Main.storyboard */,
 				4AEF0F1D2162370300FF034E /* ViewController.swift */,
 				4AEF0F262162370400FF034E /* ListContentsViewController.swift */,
 				4AEF0F1F2162370300FF034E /* CteateListViewController.swift */,
@@ -361,7 +361,6 @@
 				English,
 				en,
 				Base,
-				global,
 			);
 			mainGroup = 52D6D9721BEFF229002C0205;
 			productRefGroup = 52D6D97D1BEFF229002C0205 /* Products */;
@@ -380,7 +379,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4AEF0F352162370400FF034E /* DescriptionFooterView.xib in Resources */,
-				4AEF0F3F2162371700FF034E /* Main.storyboard in Resources */,
+				0814D809269D7DD80039424F /* Main.storyboard in Resources */,
 				4AEF0F322162370400FF034E /* TitleHeaderView.xib in Resources */,
 				4AEF0F10216236A700FF034E /* Assets.xcassets in Resources */,
 			);
@@ -449,17 +448,6 @@
 			targetProxy = 4AEF0F1A216236C900FF034E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		4AEF0F3D2162371700FF034E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				4AEF0F3E2162371700FF034E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		4AEF0F16216236A700FF034E /* Debug */ = {
@@ -648,6 +636,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 0.7.0;
 				ONLY_ACTIVE_ARCH = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Sheet.Sheet-iOS";
 				PRODUCT_NAME = Sheet;
@@ -673,6 +662,7 @@
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MARKETING_VERSION = 0.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.Sheet.Sheet-iOS";
 				PRODUCT_NAME = Sheet;
 				SKIP_INSTALL = YES;
