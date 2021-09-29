@@ -47,6 +47,12 @@ open class SheetContentsViewController: UICollectionViewController, SheetContent
         setupViews()
     }
 
+    open override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+
+        updateTopMargin()
+    }
+
     /// Give CollectionView a chance to regulate Supplementray Element
     open func registCollectionElement() {
 
@@ -154,10 +160,16 @@ private extension SheetContentsViewController {
     }
 
     func setupDimmingView() {
-        let dimmingButton = UIButton(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: topMargin))
+        let dimmingButton = UIButton()
+        collectionView?.insertSubview(dimmingButton, at: 0)
+        dimmingButton.translatesAutoresizingMaskIntoConstraints = false
+        dimmingButton.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        dimmingButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        dimmingButton.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        dimmingButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+
         dimmingButton.backgroundColor = .clear
         dimmingButton.addTarget(self, action: #selector(tappedBackground), for: .touchUpInside)
-        collectionView?.insertSubview(dimmingButton, at: 0)
     }
 }
 
