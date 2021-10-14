@@ -164,10 +164,16 @@ private extension SheetNavigationController {
     }
     
     func setupBackgroundView() {
-        let backgroundView = UIView(frame: UIScreen.main.bounds)
+        let backgroundView = UIView()
+        view.insertSubview(backgroundView, at: 0)
+        backgroundView.translatesAutoresizingMaskIntoConstraints = false
+        backgroundView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        backgroundView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+        backgroundView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        backgroundView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+
         backgroundView.alpha = 0
         backgroundView.backgroundColor = options.dimmingViewBackgroundColor
-        view.insertSubview(backgroundView, at: 0)
         self.backgroundView = backgroundView
     }
 
